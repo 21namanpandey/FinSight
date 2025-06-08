@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: finsight-postgres
+    environment:
+      POSTGRES_USER: finsight
+      POSTGRES_PASSWORD: finsight_password
+      POSTGRES_DB: finsight
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - finsight-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: finsight-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - finsight-network
+    command: redis-server --appendonly yes
+
+  adminer:
+    image: adminer
+    container_name: finsight-adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - finsight-network
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  finsight-network:
+    driver: bridge
