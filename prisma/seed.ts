@@ -3,36 +3,22 @@ import { subDays, subMonths, format } from 'date-fns';
 
 const prisma = new PrismaClient();
 
-const categories: Category[] = [
-  'FOOD_DINING',
-  'TRANSPORTATION',
-  'SHOPPING',
-  'ENTERTAINMENT',
-  'BILLS_UTILITIES',
-  'HEALTHCARE',
-  'TRAVEL',
-  'EDUCATION',
-  'GROCERIES',
-  'RENT',
-  'OTHER'
-];
-
 const sampleTransactions = [
-  { description: 'Grocery shopping at Walmart', category: 'GROCERIES', amount: 85.50 },
-  { description: 'Monthly rent payment', category: 'RENT', amount: 1200.00 },
-  { description: 'Dinner at Italian restaurant', category: 'FOOD_DINING', amount: 45.75 },
-  { description: 'Gas station fill-up', category: 'TRANSPORTATION', amount: 52.30 },
-  { description: 'Netflix subscription', category: 'ENTERTAINMENT', amount: 15.99 },
-  { description: 'Electricity bill', category: 'BILLS_UTILITIES', amount: 89.45 },
-  { description: 'Doctor visit copay', category: 'HEALTHCARE', amount: 25.00 },
-  { description: 'Online course purchase', category: 'EDUCATION', amount: 199.99 },
-  { description: 'Coffee shop', category: 'FOOD_DINING', amount: 4.50 },
-  { description: 'Uber ride', category: 'TRANSPORTATION', amount: 12.75 },
-  { description: 'Amazon purchase', category: 'SHOPPING', amount: 67.89 },
-  { description: 'Movie tickets', category: 'ENTERTAINMENT', amount: 24.00 },
-  { description: 'Pharmacy prescription', category: 'HEALTHCARE', amount: 18.50 },
-  { description: 'Internet bill', category: 'BILLS_UTILITIES', amount: 59.99 },
-  { description: 'Weekend trip hotel', category: 'TRAVEL', amount: 150.00 },
+  { description: 'Grocery shopping at Walmart', category: Category.GROCERIES, amount: 85.50 },
+  { description: 'Monthly rent payment', category: Category.RENT, amount: 1200.00 },
+  { description: 'Dinner at Italian restaurant', category: Category.FOOD_DINING, amount: 45.75 },
+  { description: 'Gas station fill-up', category: Category.TRANSPORTATION, amount: 52.30 },
+  { description: 'Netflix subscription', category: Category.ENTERTAINMENT, amount: 15.99 },
+  { description: 'Electricity bill', category: Category.BILLS_UTILITIES, amount: 89.45 },
+  { description: 'Doctor visit copay', category: Category.HEALTHCARE, amount: 25.00 },
+  { description: 'Online course purchase', category: Category.EDUCATION, amount: 199.99 },
+  { description: 'Coffee shop', category: Category.FOOD_DINING, amount: 4.50 },
+  { description: 'Uber ride', category: Category.TRANSPORTATION, amount: 12.75 },
+  { description: 'Amazon purchase', category: Category.SHOPPING, amount: 67.89 },
+  { description: 'Movie tickets', category: Category.ENTERTAINMENT, amount: 24.00 },
+  { description: 'Pharmacy prescription', category: Category.HEALTHCARE, amount: 18.50 },
+  { description: 'Internet bill', category: Category.BILLS_UTILITIES, amount: 59.99 },
+  { description: 'Weekend trip hotel', category: Category.TRAVEL, amount: 150.00 },
 ];
 
 async function main() {
@@ -67,8 +53,7 @@ async function main() {
         description: randomTransaction.description,
         amount,
         date: transactionDate,
-        // category: randomTransaction.category,
-        category: Category[randomTransaction.category as keyof typeof Category],
+        category: randomTransaction.category,
       });
     }
   }
@@ -83,14 +68,14 @@ async function main() {
   // Create budgets for current month
   const currentMonth = format(currentDate, 'yyyy-MM');
   const budgetData = [
-    { category: 'GROCERIES', amount: 400.00 },
-    { category: 'RENT', amount: 1200.00 },
-    { category: 'FOOD_DINING', amount: 300.00 },
-    { category: 'TRANSPORTATION', amount: 200.00 },
-    { category: 'ENTERTAINMENT', amount: 150.00 },
-    { category: 'BILLS_UTILITIES', amount: 250.00 },
-    { category: 'HEALTHCARE', amount: 100.00 },
-    { category: 'SHOPPING', amount: 200.00 },
+    { category: Category.GROCERIES, amount: 400.00 },
+    { category: Category.RENT, amount: 1200.00 },
+    { category: Category.FOOD_DINING, amount: 300.00 },
+    { category: Category.TRANSPORTATION, amount: 200.00 },
+    { category: Category.ENTERTAINMENT, amount: 150.00 },
+    { category: Category.BILLS_UTILITIES, amount: 250.00 },
+    { category: Category.HEALTHCARE, amount: 100.00 },
+    { category: Category.SHOPPING, amount: 200.00 },
   ];
 
   for (const budget of budgetData) {
