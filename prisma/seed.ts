@@ -67,7 +67,8 @@ async function main() {
         description: randomTransaction.description,
         amount,
         date: transactionDate,
-        category: randomTransaction.category,
+        // category: randomTransaction.category,
+        category: Category[randomTransaction.category as keyof typeof Category],
       });
     }
   }
